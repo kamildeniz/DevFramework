@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DevFramework.Northwind.DataAccess.Concrete.EntityFramework
 {
-    internal class NorthwindContext : DbContext
+    public class NorthwindContext : DbContext
     {
         public NorthwindContext()
         {
