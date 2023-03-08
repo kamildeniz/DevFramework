@@ -1,5 +1,6 @@
 ﻿using DevFramework.Core.Aspects.Postsharp;
 using DevFramework.Core.CrossCuttingConcerns.Validation.FluentValidation;
+using DevFramework.Core.DataAccess;
 using DevFramework.Northwind.Business.Abstract;
 using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.DataAccess.Abstract;
@@ -21,7 +22,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
 
 
         public List<Product> GetAll()
-        {
+        { 
             return _productDal.GetList();
         }
 
