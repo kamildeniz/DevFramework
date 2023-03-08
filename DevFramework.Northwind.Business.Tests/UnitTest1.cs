@@ -6,7 +6,7 @@ using System;
 namespace DevFramework.Northwind.Business.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class ProductManagerTests
     {
         [TestMethod]
         public void TestMethod1()
