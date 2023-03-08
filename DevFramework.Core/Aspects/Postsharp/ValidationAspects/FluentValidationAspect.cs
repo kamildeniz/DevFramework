@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace DevFramework.Core.Aspects.Postsharp
+namespace DevFramework.Core.Aspects.Postsharp.ValidationAspects
 {
     [Serializable]
     public class FluentValidationAspect : OnMethodBoundaryAspect
@@ -22,8 +22,8 @@ namespace DevFramework.Core.Aspects.Postsharp
         {
             var validator = (IValidator)Activator.CreateInstance(_validaterType);
             var entityType = _validaterType.BaseType.GetGenericArguments()[0];
-            var entities = args.Arguments.Where(t=> t.GetType() == entityType);
-            foreach ( var entity in entities )
+            var entities = args.Arguments.Where(t => t.GetType() == entityType);
+            foreach (var entity in entities)
             {
                 ValidatorTool.FluentValidate(validator, entity);
             }
