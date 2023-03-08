@@ -60,13 +60,25 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ProductManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevFramework.Core\DevFramework.Core.csproj">
+      <Project>{eb0227a0-7854-4601-b76c-b2c426a632d0}</Project>
+      <Name>DevFramework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevFramework.Northwind.Business\DevFramework.Northwind.Business.csproj">
+      <Project>{7c9aa871-541e-41d1-b203-c122279e8c5d}</Project>
+      <Name>DevFramework.Northwind.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DevFramework.Northwind.DataAccess\DevFramework.Northwind.DataAccess.csproj">
       <Project>{6407C9E3-84D7-4E50-A637-BDD50610ED2E}</Project>
       <Name>DevFramework.Northwind.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevFramework.Northwind.Entities\DevFramework.Northwind.Entities.csproj">
+      <Project>{a934fc34-5664-4afc-93e6-6606fecd2b39}</Project>
+      <Name>DevFramework.Northwind.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
