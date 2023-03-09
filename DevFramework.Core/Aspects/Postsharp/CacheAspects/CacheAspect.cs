@@ -2,6 +2,7 @@
 using PostSharp.Aspects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace DevFramework.Core.Aspects.Postsharp.CacheAspects
         private int _cacheByMinute;
         private ICacheManager _cacheManager;
 
-        public CacheAspect(Type cacheType, int cacheByMinute)
+        public CacheAspect(Type cacheType, int cacheByMinute=60)
         {
             _cacheType = cacheType;
             _cacheByMinute = cacheByMinute;
@@ -35,7 +36,17 @@ namespace DevFramework.Core.Aspects.Postsharp.CacheAspects
                 args.Method.ReflectedType.Namespace,
                 args.Method.ReflectedType.Name,
                 args.Method.Name);
+            var arguments = args.Arguments.ToString();
+
+            var key = string.Format("0}({1})", methodName,
+                string.Join(",", arguments.Select(x => x != null ? x.ToString() : null)));
+
+            if (_cacheManager.IsAdd(key))
+            {
+                args.ReturnValue = _cacheManager.Get<object>(key);
+            }
             base.OnInvoke(args);
+            _cacheManager.Add(key, args.ReturnValue, _cacheByMinute);
         }
     }
 }
