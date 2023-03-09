@@ -13,4 +13,8 @@
     <PackageReference Include="System.Runtime.Caching" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CrossCuttingConcerns\Logging\Log4Net\" />
+  </ItemGroup>
+
 </Project>
