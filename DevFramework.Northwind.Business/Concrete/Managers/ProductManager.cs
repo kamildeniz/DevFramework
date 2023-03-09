@@ -23,7 +23,7 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
             _productDal = productDal;
         }
 
-
+        [CacheAspect()]
         public List<Product> GetAll()
         {
             return _productDal.GetList();
