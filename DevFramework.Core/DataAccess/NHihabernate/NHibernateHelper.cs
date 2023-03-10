@@ -1,11 +1,13 @@
-﻿using NHibernate;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using NHibernate;
 
 namespace DevFramework.Core.DataAccess.NHihabernate
 {
-    public abstract class NHibernateHelper : IDisposable
+    public abstract class NHibernateHelper:IDisposable
     {
         private static ISessionFactory _sessionFactory;
 
@@ -23,7 +25,6 @@ namespace DevFramework.Core.DataAccess.NHihabernate
 
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
-        }
+            GC.SuppressFinalize(this);}
     }
 }

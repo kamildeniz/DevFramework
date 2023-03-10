@@ -1,21 +1,23 @@
-﻿using log4net.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using log4net.Core;
 
 namespace DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net
 {
     [Serializable]
     public class SerializableLogEvent
     {
-        private LoggingEvent _logginEvent;
+        private LoggingEvent _loggingEvent;
 
-        public SerializableLogEvent(LoggingEvent logginEvent)
+        public SerializableLogEvent(LoggingEvent loggingEvent)
         {
-            _logginEvent = logginEvent;
+            _loggingEvent = loggingEvent;
         }
-        public string UserName => _logginEvent.UserName;
-        public object MessageObject => _logginEvent.MessageObject;
 
+        public string UserName => _loggingEvent.UserName;
+        public object MessageObject => _loggingEvent.MessageObject;
     }
 }

@@ -1,16 +1,17 @@
-﻿using DevFramework.Core.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
+using DevFramework.Core.Entities;
 using NHibernate.Linq;
-using System.Data.Entity;
-using System.Linq;
+
 
 namespace DevFramework.Core.DataAccess.NHihabernate
 {
     public class NhEntityRepositoryBase<TEntity>:IEntityRepository<TEntity>
-        where TEntity : class,IEntity,new()
+        where TEntity:class,IEntity,new()
     {
         private NHibernateHelper _nHibernateHelper;
 
@@ -33,11 +34,10 @@ namespace DevFramework.Core.DataAccess.NHihabernate
             using (var session = _nHibernateHelper.OpenSession())
             {
                 session.Delete(entity);
-                
             }
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter = null)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (var session = _nHibernateHelper.OpenSession())
             {
@@ -50,8 +50,8 @@ namespace DevFramework.Core.DataAccess.NHihabernate
             using (var session = _nHibernateHelper.OpenSession())
             {
                 return filter == null
-                    ?session.Query<TEntity>().ToList()
-                    :session.Query<TEntity>().Where(filter).ToList();     
+                    ? session.Query<TEntity>().ToList()
+                    : session.Query<TEntity>().Where(filter).ToList();
             }
         }
 

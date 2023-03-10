@@ -1,7 +1,9 @@
-﻿using DevFramework.Core.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using DevFramework.Core.Entities;
 
 namespace DevFramework.Northwind.Entities.Concrete
 {
@@ -9,6 +11,5 @@ namespace DevFramework.Northwind.Entities.Concrete
     {
         public virtual int CategoryId { get; set; }
         public virtual string CategoryName { get; set; }
-
     }
 }

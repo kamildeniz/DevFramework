@@ -1,20 +1,24 @@
-﻿using DevFramework.Core.Aspects.Postsharp;
-using DevFramework.Core.Aspects.Postsharp.CacheAspects;
-using DevFramework.Core.Aspects.Postsharp.LogAspects;
-using DevFramework.Core.Aspects.Postsharp.TransactionAspects;
-using DevFramework.Core.Aspects.Postsharp.ValidationAspects;
-using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
-using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Transactions;
 using DevFramework.Core.CrossCuttingConcerns.Validation.FluentValidation;
-using DevFramework.Core.DataAccess;
 using DevFramework.Northwind.Business.Abstract;
 using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using DevFramework.Northwind.DataAccess.Abstract;
 using DevFramework.Northwind.Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Transactions;
+using DevFramework.Core.Aspects.Postsharp;
+using DevFramework.Core.Aspects.Postsharp.CacheAspects;
+using DevFramework.Core.Aspects.Postsharp.LogAspects;
+using DevFramework.Core.Aspects.Postsharp.PerformanceAspects;
+using DevFramework.Core.Aspects.Postsharp.TransactionAspects;
+using DevFramework.Core.Aspects.Postsharp.ValidationAspects;
+using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
+using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using DevFramework.Core.DataAccess;
 
 namespace DevFramework.Northwind.Business.Concrete.Managers
 {
@@ -28,11 +32,12 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
-        [LogAspect(typeof(DatabaseLogger))]
-        [LogAspect(typeof(FileLogger))]
+        [PerformanceCounterAspect(2)]
         public List<Product> GetAll()
         {
+            Thread.Sleep(3000);
             return _productDal.GetList();
+
         }
 
         public Product GetById(int id)
@@ -40,24 +45,25 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
             return _productDal.Get(p => p.ProductId == id);
         }
 
-        [FluentValidationAspect(typeof(ProductValidator))]
+        [FluentValidationAspect(typeof(ProductValidatior))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public Product Add(Product product)
         {
             return _productDal.Add(product);
         }
 
-        [FluentValidationAspect(typeof(ProductValidator))]
+        [FluentValidationAspect(typeof(ProductValidatior))]
         public Product Update(Product product)
         {
             return _productDal.Update(product);
         }
 
         [TransactionScopeAspect]
+        [FluentValidationAspect(typeof(ProductValidatior))]
         public void TransactionalOperation(Product product1, Product product2)
-        { 
+        {
             _productDal.Add(product1);
-            //Business Code
+            // Business Codes
             _productDal.Update(product2);
         }
     }

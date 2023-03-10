@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DevFramework.Core.CrossCuttingConcerns.Logging
 {
     public class LogParameter
     {
-        public string Name { get; internal set; }
-        public Type Type { get; internal set; }
-        public object Value { get; internal set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public object Value { get; set; }
     }
 }

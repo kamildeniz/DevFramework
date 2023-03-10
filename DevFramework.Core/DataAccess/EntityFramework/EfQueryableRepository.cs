@@ -1,14 +1,14 @@
-﻿using DevFramework.Core.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using DevFramework.Core.Entities;
 
 namespace DevFramework.Core.DataAccess.EntityFramework
 {
-    public class EfQueryableRepository<T> : IQueryableRepository<T>
-        where T : class, IEntity, new()
+    public class EfQueryableRepository<T>:IQueryableRepository<T> where T:class ,IEntity,new()
     {
         private DbContext _context;
         private IDbSet<T> _entities;
@@ -22,7 +22,7 @@ namespace DevFramework.Core.DataAccess.EntityFramework
 
         protected virtual IDbSet<T> Entities
         {
-            get { return _entities ??= _context.Set<T>(); }
+            get { return _entities ?? (_entities = _context.Set<T>()); }
         }
     }
 }
