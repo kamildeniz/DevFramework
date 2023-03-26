@@ -17,8 +17,11 @@ using DevFramework.Core.Aspects.Postsharp.PerformanceAspects;
 using DevFramework.Core.Aspects.Postsharp.TransactionAspects;
 using DevFramework.Core.Aspects.Postsharp.ValidationAspects;
 using DevFramework.Core.CrossCuttingConcerns.Caching.Microsoft;
+using DevFramework.Core.Aspects.Postsharp.AuthorizationAspect;
 using DevFramework.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using DevFramework.Core.DataAccess;
+using AutoMapper;
+using DevFramework.Core.Utilities.Mappings;
 
 namespace DevFramework.Northwind.Business.Concrete.Managers
 {
@@ -33,12 +36,23 @@ namespace DevFramework.Northwind.Business.Concrete.Managers
 
         [CacheAspect(typeof(MemoryCacheManager))]
         [PerformanceCounterAspect(2)]
+        //[SecuredOperation(Roles="Admin,Editor,Student")]
         public List<Product> GetAll()
         {
-            Thread.Sleep(3000);
-            return _productDal.GetList();
+            //Thread.Sleep(3000);
+            //return _productDal.GetList().Select(p => new Product
+            //{
+            //    CategoryId = p.CategoryId,
+            //    ProductId = p.ProductId,
+            //    ProductName = p.ProductName,
+            //    QuantityPerUnit = p.QuantityPerUnit,
+            //    UnitPrice = p.UnitPrice
+            //}).ToList();
 
+            var products= AutoMapperHelper.MapToSameTypeList<Product>(_productDal.GetList());
+            return products;
         }
+
 
         public Product GetById(int id)
         {
