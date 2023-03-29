@@ -5,18 +5,21 @@ namespace DevFramework.Northwind.WebApi.App_Start
 {
     using System;
     using System.Web;
-
+    using System.Web.Http;
+    using DevFramework.Northwind.Business.DependencyResolvers.Ninject;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
+    using Ninject.Web.Common.WebHost;
+    using WebApiContrib.IoC.Ninject;
 
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
-        /// Starts the application
+        /// Starts the application.
         /// </summary>
         public static void Start() 
         {
@@ -24,7 +27,7 @@ namespace DevFramework.Northwind.WebApi.App_Start
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -32,7 +35,7 @@ namespace DevFramework.Northwind.WebApi.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -44,7 +47,7 @@ namespace DevFramework.Northwind.WebApi.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -61,6 +64,7 @@ namespace DevFramework.Northwind.WebApi.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Load(new BusinessModule(), new AutoMapperModule());
+        }
     }
 }
