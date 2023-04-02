@@ -5,7 +5,7 @@ import { IMovie } from './movie';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: 'tsScripts/src/app/app.component.html',
   styleUrls: [ './app.component.css' ],
   providers: [ MovieService ]
 })
